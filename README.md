@@ -157,3 +157,10 @@ https://http.kali.org/README?mirrorstats
 ```sh
 https://http.kali.org/README?mirrorlist
 ```
+# Kali Live USB persistent
+- [USB Persistent](https://github.com/xiv3r/kali/blob/main/Kali%20on%20USB%20Two%20Methods.pdf)
+
+
+
+
+
