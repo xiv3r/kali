@@ -12,8 +12,12 @@ https://kali.download
 ```
 
 <details><summary>
-  
-# Kali Subdomains </summary>
+
+# Kali Subdomains
+```sh
+https://images.kali.org
+```
+</summary>
 
 ```sh
 images.kali.org
@@ -144,3 +148,12 @@ iapetus.kali.org
 hades.kali.org
 ```
 </details>
+
+# Kali fastest mirror stats
+```sh
+https://http.kali.org/README?mirrorstats
+```
+# Kali nearby servers
+```sh
+https://http.kali.org/README?mirrorlist
+```
