@@ -10,7 +10,11 @@ https://archive.kali.org
 ```sh
 https://kali.download
 ```
-# Kali subdomains
+
+<details><summary>
+  
+# Kali Subdomains </summary>
+
 ```sh
 images.kali.org
 www.tools.kali.org
@@ -139,3 +143,4 @@ ru.docs.kali.org
 iapetus.kali.org
 hades.kali.org
 ```
+</details>
