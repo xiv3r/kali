@@ -3,7 +3,7 @@ name: Weekly NetHunter Download and Release
 on:
   schedule:
     - cron: '0 4 * * SUN'
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   download-and-release:
@@ -13,12 +13,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Download Kali NetHunter RootFS Files
+    - name: Download Kali NetHunter RootFS
       run: |
         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz
-        wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-armhf.tar.xz
-        wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-amd64.tar.xz
-        wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-i386.tar.xz
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
@@ -26,18 +23,10 @@ jobs:
         tag_name: nethunter-weekly-$(date +%Y%m%d)
         name: "Kali NetHunter RootFS - $(date +'%Y-%m-%d')"
         body: |
-          Weekly automated download of Kali NetHunter RootFS (Multiple Architectures)
+          Weekly automated download of Kali NetHunter RootFS (Minimal ARM64)
           - Downloaded on: $(date)
-          - Files included:
-            • kali-nethunter-rootfs-minimal-arm64.tar.xz
-            • kali-nethunter-rootfs-minimal-armhf.tar.xz
-            • kali-nethunter-rootfs-minimal-amd64.tar.xz
-            • kali-nethunter-rootfs-minimal-i386.tar.xz
-          - Source: https://kali.download/nethunter-images/current/rootfs/
+          - Source: https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz
         files: |
           kali-nethunter-rootfs-minimal-arm64.tar.xz
-          kali-nethunter-rootfs-minimal-armhf.tar.xz
-          kali-nethunter-rootfs-minimal-amd64.tar.xz
-          kali-nethunter-rootfs-minimal-i386.tar.xz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
