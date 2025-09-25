@@ -1,8 +1,8 @@
-name: Weekly NetHunter Download and Release
+name: Updating Kali Linux
 
 on:
   schedule:
-    - cron: '0 5 * * SUN'
+    - cron: '0 5 * * *'
   workflow_dispatch:
 
 jobs:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout repository
+    - name: Checkout Repository
       uses: actions/checkout@v4
 
     - name: Downloading Kali Linux 
@@ -20,17 +20,60 @@ jobs:
         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-amd64.tar.xz
         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-i386.tar.xz
 
-    - name: Create Release with GH CLI
+    - name: Create DETAILS.md with release notes
       run: |
-        gh release create "nethunter-weekly-$(date +%Y%m%d)" \
-          --title "Kali Linux Release - $(date +'%Y-%m-%d')" \
-          --notes "Kali Linux Weekly Updates
-          
-          Files included:
-        • kali-nethunter-rootfs-minimal-arm64.tar.xz
-        • kali-nethunter-rootfs-minimal-armhf.tar.xz
-        • kali-nethunter-rootfs-minimal-amd64.tar.xz
-        • kali-nethunter-rootfs-minimal-i386.tar.xz" \   
-          kali-nethunter-rootfs-*.tar.xz
+        cat > DETAILS.md << 'EOF'
+        # Kali Linux NetHunter RootFS - $(date +'%Y-%m-%d')
+        
+        ## Latest RootFS Images
+        
+        This release contains minimal NetHunter root filesystem images for multiple architectures:
+        
+        - **kali-nethunter-rootfs-minimal-amd64.tar.xz**: 64-bit x86 systems
+        - **kali-nethunter-rootfs-minimal-i386.tar.xz**: 32-bit x86 systems  
+        - **kali-nethunter-rootfs-minimal-arm64.tar.xz**: 64-bit ARM systems
+        - **kali-nethunter-rootfs-minimal-armhf.tar.xz**: 32-bit ARM systems (hard float)
+        
+        ## Source
+        - Downloaded from: https://kali.download/nethunter-images/current/rootfs/
+        - Build date: $(date -u +'%Y-%m-%d %H:%M UTC')
+        
+        ## Usage
+        These root filesystem images are designed for NetHunter installations and can be used as base systems for Kali Linux on various devices.
+        
+        ### File Information
+        EOF
+        
+        echo -e "\n### File Sizes and Checksums" >> DETAILS.md
+        echo '```' >> DETAILS.md
+        for file in kali-nethunter-rootfs-*.tar.xz; do
+          size=$(du -h "$file" | cut -f1)
+          checksum=$(sha256sum "$file" | cut -d' ' -f1)
+          echo "$file - Size: $size - SHA256: $checksum" >> DETAILS.md
+        done
+        echo '```' >> DETAILS.md
+
+    - name: Delete existing assets from release
+      run: |
+        gh release delete-asset "kali-latest" kali-nethunter-rootfs-*.tar.xz --yes || true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload assets to existing release
+      run: |
+        # Check if release exists, create if it doesn't
+        if ! gh release view "kali-latest" > /dev/null 2>&1; then
+          gh release create "kali-latest" \
+            --title "Kali Linux Latest Release: $(date +'%Y-%m-%d')" \
+            --notes-file DETAILS.md
+        else
+          # Update existing release with new notes
+          gh release edit "kali-latest" \
+            --title "Kali Linux Latest Release: $(date +'%Y-%m-%d')" \
+            --notes-file DETAILS.md
+        fi
+        
+        # Upload all rootfs files
+        gh release upload "kali-latest" kali-nethunter-rootfs-*.tar.xz --clobber
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
