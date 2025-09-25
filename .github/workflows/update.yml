@@ -24,8 +24,13 @@ jobs:
       run: |
         gh release create "nethunter-weekly-$(date +%Y%m%d)" \
           --title "Kali Linux Release - $(date +'%Y-%m-%d')" \
-          --notes "Kali Linux Weekly Updates" \
+          --notes "Kali Linux Weekly Updates
           
+          Files included:
+        • kali-nethunter-rootfs-minimal-arm64.tar.xz
+        • kali-nethunter-rootfs-minimal-armhf.tar.xz
+        • kali-nethunter-rootfs-minimal-amd64.tar.xz
+        • kali-nethunter-rootfs-minimal-i386.tar.xz" \   
           kali-nethunter-rootfs-*.tar.xz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
