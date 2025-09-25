@@ -25,17 +25,9 @@ jobs:
         cat > DETAILS.md << 'EOF'
         # Kali Linux Latest Release - $(date +'%Y-%m-%d')
         
-        ## Termux Lastest
-       https://github.com/termux/termux-app/releases/download/v0.118.3/termux-app_v0.118.3+github-debug_universal.apk
-
-       * Releases
-       https://github.com/termux/termux-app/releases/
-
-       ## Nethunter VNC
-       https://store.nethunter.com/repo/com.offsec.nethunter.kex_11525001.apk
-
-       * Releases
-       https://store.nethunter.com/packages/com.offsec.nethunter.kex
+        ## Source
+        - Downloaded from: https://kali.download/nethunter-images/current/rootfs/
+        
         EOF
         
         echo -e "\n### File Sizes and Checksums" >> DETAILS.md
