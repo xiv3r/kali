@@ -23,25 +23,21 @@ jobs:
     - name: Create DETAILS.md with release notes
       run: |
         cat > DETAILS.md << 'EOF'
-        # Kali Linux NetHunter RootFS - $(date +'%Y-%m-%d')
+        # Kali Linux Latest Release - $(date +'%Y-%m-%d')
         
-        ## Latest RootFS Images
-        
-        This release contains minimal NetHunter root filesystem images for multiple architectures:
-        
-        - **kali-nethunter-rootfs-minimal-amd64.tar.xz**: 64-bit x86 systems
-        - **kali-nethunter-rootfs-minimal-i386.tar.xz**: 32-bit x86 systems  
-        - **kali-nethunter-rootfs-minimal-arm64.tar.xz**: 64-bit ARM systems
-        - **kali-nethunter-rootfs-minimal-armhf.tar.xz**: 32-bit ARM systems (hard float)
-        
-        ## Source
-        - Downloaded from: https://kali.download/nethunter-images/current/rootfs/
-        - Build date: $(date -u +'%Y-%m-%d %H:%M UTC')
-        
-        ## Usage
-        These root filesystem images are designed for NetHunter installations and can be used as base systems for Kali Linux on various devices.
-        
-        ### File Information
+        ## Termux Lastest
+       - APK
+       https://github.com/termux/termux-app/releases/download/v0.118.3/termux-app_v0.118.3+github-debug_universal.apk
+
+       - Releases
+       https://github.com/termux/termux-app/releases/
+
+       # Nethunter VNC
+       - APK
+       https://store.nethunter.com/repo/com.offsec.nethunter.kex_11525001.apk
+
+       - Releases
+       https://store.nethunter.com/packages/com.offsec.nethunter.kex
         EOF
         
         echo -e "\n### File Sizes and Checksums" >> DETAILS.md
