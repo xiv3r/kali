@@ -23,14 +23,13 @@ jobs:
     - name: Create DETAILS.md with release notes
       run: |
         cat > DETAILS.md << 'EOF'
-        # Kali Linux Latest Release - $(date +'%Y-%m-%d')
         
         ## Source
         - Downloaded from: https://kali.download/nethunter-images/current/rootfs/
         
         EOF
         
-        echo -e "\n### File Sizes and Checksums" >> DETAILS.md
+        echo -e "\n## Checksums" >> DETAILS.md
         echo '```' >> DETAILS.md
         for file in kali-nethunter-rootfs-*.tar.xz; do
           size=$(du -h "$file" | cut -f1)
