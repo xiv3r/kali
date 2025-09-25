@@ -2,7 +2,7 @@ name: Weekly NetHunter Download and Release
 
 on:
   schedule:
-    - cron: '0 4 * * SUN'
+    - cron: '0 5 * * SUN'
   workflow_dispatch:
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Download Kali NetHunter RootFS Files
+    - name: Downloading Kali Linux 
       run: |
         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz
         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-armhf.tar.xz
@@ -22,19 +22,10 @@ jobs:
 
     - name: Create Release with GH CLI
       run: |
-        # Create release with all downloaded files
         gh release create "nethunter-weekly-$(date +%Y%m%d)" \
-          --title "Kali NetHunter RootFS - $(date +'%Y-%m-%d')" \
-          --notes "Weekly automated download of Kali NetHunter RootFS (Multiple Architectures)
-
-        Downloaded on: $(date)
-        Files included:
-        • kali-nethunter-rootfs-minimal-arm64.tar.xz
-        • kali-nethunter-rootfs-minimal-armhf.tar.xz
-        • kali-nethunter-rootfs-minimal-amd64.tar.xz
-        • kali-nethunter-rootfs-minimal-i386.tar.xz
-
-        Source: https://kali.download/nethunter-images/current/rootfs/" \
+          --title "Kali Linux Release - $(date +'%Y-%m-%d')" \
+          --notes "Kali Linux Weekly Updates" \
+          
           kali-nethunter-rootfs-*.tar.xz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
