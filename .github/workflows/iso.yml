@@ -7,7 +7,8 @@ on:
 
 env:
   ISO_URL: https://kali.download/base-images/current/kali-linux-2025.3-live-everything-amd64.iso.torrent
-  
+  ISO_NAME: kali-linux-2025.3-live-everything-amd64.iso.torrent
+
 jobs:
   download-and-release:
     runs-on: ubuntu-latest
