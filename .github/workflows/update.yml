@@ -38,10 +38,6 @@ jobs:
     - name: Create DETAILS.md with release notes
       run: |
         cat > DETAILS.md << 'EOF'
-        # Kali NetHunter RootFS Builds
-        
-        Automated build of Kali NetHunter root filesystems for various architectures.
-        
         ## Available Architectures
         - **arm64**: 64-bit ARM devices
         - **armhf**: 32-bit ARM devices
@@ -49,8 +45,6 @@ jobs:
         ## Variants
         - **minimal**: Minimal installation with essential tools
         - **nano**: Even more minimal footprint
-        
-        Built automatically on: $(date -u)
         EOF
         
         echo -e "\n## Checksums" >> DETAILS.md
