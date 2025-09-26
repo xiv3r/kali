@@ -20,7 +20,7 @@ jobs:
     - name: Download ISO file
       run: |
         echo "Downloading ISO file..."
-        wget -O $ISO_URL
+        wget -O $ISO_NAME $ISO_URL
         echo "File downloaded successfully"
         ls -lh $ISO_NAME
         
