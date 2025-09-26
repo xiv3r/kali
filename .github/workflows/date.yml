@@ -33,7 +33,7 @@ jobs:
       run: |
         # Create README
         cat > README.md << EOF
-        # [Kali Linux Latest Release](https://github.com/xiv3r/kali/releases/tag/kali-latest) - ${{ steps.date.outputs.current_date }}
+        # [Kali Linux Latest Release - ${{ steps.date.outputs.current_date }}](https://github.com/xiv3r/kali/releases/tag/kali-latest)
         EOF
 
     - name: Commit and push changes
