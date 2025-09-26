@@ -8,8 +8,8 @@ on:
      - cron: "0 0 * * 0"
 
 env:
-  ISO_URL: https://kali.download/base-images/current/kali-linux-2025.3-live-amd64.iso
-  ISO_NAME: kali-linux-2025.3-live-amd64.iso
+  ISO_URL: https://kali.download/base-images/current/kali-linux-2025.3-installer-netinst-amd64.iso
+  ISO_NAME: kali-linux-2025.3-installer-netinst-amd64.iso
 
 jobs:
   download-and-release:
