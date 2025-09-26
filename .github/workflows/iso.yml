@@ -22,14 +22,32 @@ jobs:
       uses: actions/checkout@v4
       with:
         lfs: true
+        fetch-depth: 0  # Fetch full history for proper LFS management
         
     - name: Set up Git LFS
       run: git lfs install
       
-    - name: Track large files with LFS (if not already tracked)
+    - name: Track large files with LFS
       run: |
         git lfs track "*.iso"
         git add .gitattributes
+        
+    - name: Remove all existing ISO files from repository and LFS
+      run: |
+        # Remove all .iso files from repository and LFS tracking
+        git lfs ls-files | grep "\.iso" | cut -d' ' -f3 | while read file; do
+          echo "Removing LFS file: $file"
+          git rm "$file"
+        done || echo "No existing ISO files found"
+        
+        # Also remove any untracked ISO files
+        find . -name "*.iso" -type f -delete
+        
+    - name: Commit removal of old files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Remove all old ISO files for force update" || echo "No files to delete"
         
     - name: Download AMD64 ISO
       run: |
@@ -45,20 +63,19 @@ jobs:
         echo "ARM64 ISO downloaded successfully"
         ls -lh $ISO_NAME_ARM64
         
-    - name: Add and commit files with LFS
+    - name: Add and commit new files with LFS
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add $ISO_NAME_AMD64
         git add $ISO_NAME_ARM64
-        git add .gitattributes
-        git commit -m "Add Kali Linux ISOs via Git LFS (AMD64 and ARM64)" || echo "No changes to commit"
+        git commit -m "Force update: Add new Kali Linux ISOs via Git LFS (AMD64 and ARM64)"
         
-    - name: Push changes with LFS
+    - name: Force push changes with LFS
       run: |
-        git push origin HEAD:${{ github.ref_name }}
+        git push origin HEAD:${{ github.ref_name }} --force-with-lease
         
-    - name: Upload to release
+    - name: Upload AMD64 ISO to release
       if: github.event.release != null
       uses: actions/upload-release-asset@v1
       env:
