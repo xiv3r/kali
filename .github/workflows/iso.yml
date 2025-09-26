@@ -4,12 +4,14 @@ on:
   workflow_dispatch:
   release:
     types: [published]
-    schedule:
-     - cron: "0 0 * * 0"
+  schedule:
+    - cron: "0 0 * * 0"
 
 env:
-  ISO_URL: https://kali.download/base-images/current/kali-linux-2025.3-installer-netinst-amd64.iso
-  ISO_NAME: kali-linux-2025.3-installer-netinst-amd64.iso
+  ISO_URL_AMD64: https://kali.download/base-images/current/kali-linux-2025.3-installer-netinst-amd64.iso
+  ISO_NAME_AMD64: kali-linux-2025.3-installer-netinst-amd64.iso
+  ISO_URL_ARM64: https://kali.download/base-images/current/kali-linux-2025.3-installer-netinst-arm64.iso
+  ISO_NAME_ARM64: kali-linux-2025.3-installer-netinst-arm64.iso
 
 jobs:
   download-and-release:
@@ -29,20 +31,28 @@ jobs:
         git lfs track "*.iso"
         git add .gitattributes
         
-    - name: Download torrent file
+    - name: Download AMD64 ISO
       run: |
-        echo "Downloading torrent file..."
-        wget -O $ISO_NAME $ISO_URL
-        echo "File downloaded successfully"
-        ls -lh $ISO_NAME
+        echo "Downloading AMD64 ISO..."
+        wget -O $ISO_NAME_AMD64 $ISO_URL_AMD64
+        echo "AMD64 ISO downloaded successfully"
+        ls -lh $ISO_NAME_AMD64
         
-    - name: Add and commit file with LFS
+    - name: Download ARM64 ISO
+      run: |
+        echo "Downloading ARM64 ISO..."
+        wget -O $ISO_NAME_ARM64 $ISO_URL_ARM64
+        echo "ARM64 ISO downloaded successfully"
+        ls -lh $ISO_NAME_ARM64
+        
+    - name: Add and commit files with LFS
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add $ISO_NAME
+        git add $ISO_NAME_AMD64
+        git add $ISO_NAME_ARM64
         git add .gitattributes
-        git commit -m "Add $ISO_NAME via Git LFS" || echo "No changes to commit"
+        git commit -m "Add Kali Linux ISOs via Git LFS (AMD64 and ARM64)" || echo "No changes to commit"
         
     - name: Push changes with LFS
       run: |
@@ -55,6 +65,17 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./$ISO_NAME
-        asset_name: $ISO_NAME
+        asset_path: ./$ISO_NAME_AMD64
+        asset_name: $ISO_NAME_AMD64
+        asset_content_type: application/octet-stream
+        
+    - name: Upload ARM64 ISO to release
+      if: github.event.release != null
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./$ISO_NAME_ARM64
+        asset_name: $ISO_NAME_ARM64
         asset_content_type: application/octet-stream
