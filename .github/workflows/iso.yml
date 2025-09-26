@@ -1,0 +1,34 @@
+name: Kali Linux
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+env:
+  ISO_URL: https://kali.download/base-images/current/kali-linux-2025.3-live-everything-amd64.iso.torrent
+  
+jobs:
+  download-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Download ISO file
+      run: |
+        echo "Downloading ISO file..."
+        wget -O $ISO_URL
+        echo "File downloaded successfully"
+        ls -lh $ISO_NAME
+        
+    - name: Upload to release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./$ISO_NAME
+        asset_name: $ISO_NAME
+        asset_content_type: application/octet-stream
