@@ -14,17 +14,40 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout repository
+    - name: Checkout repository with LFS
       uses: actions/checkout@v4
+      with:
+        lfs: true
+        
+    - name: Set up Git LFS
+      run: git lfs install
       
-    - name: Download ISO file
+    - name: Track large files with LFS (if not already tracked)
       run: |
-        echo "Downloading ISO file..."
+        git lfs track "*.torrent"
+        git add .gitattributes
+        
+    - name: Download torrent file
+      run: |
+        echo "Downloading torrent file..."
         wget -O $ISO_NAME $ISO_URL
         echo "File downloaded successfully"
         ls -lh $ISO_NAME
         
+    - name: Add and commit file with LFS
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add $ISO_NAME
+        git add .gitattributes
+        git commit -m "Add $ISO_NAME via Git LFS" || echo "No changes to commit"
+        
+    - name: Push changes with LFS
+      run: |
+        git push origin HEAD:${{ github.ref_name }}
+        
     - name: Upload to release
+      if: github.event.release != null
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
