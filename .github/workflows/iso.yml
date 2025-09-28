@@ -47,7 +47,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git commit -m "Remove all old ISO files for force update" || echo "No files to delete"
+        git commit -m "Remove all old ISO files" || echo "No files to delete"
         
     - name: Download AMD64 ISO
       run: |
@@ -69,7 +69,7 @@ jobs:
         git config --local user.name "GitHub Action"
         git add $ISO_NAME_AMD64
         git add $ISO_NAME_ARM64
-        git commit -m "Force update: Add new Kali Linux ISOs via Git LFS (AMD64 and ARM64)"
+        git commit -m "Update: Kali Linux ISOs via Git LFS (AMD64 and ARM64)"
         
     - name: Force push changes with LFS
       run: |
