@@ -35,18 +35,6 @@ jobs:
         sudo apt update
         sudo apt install -y gh
 
-    - name: Create DETAILS.md with release notes
-      run: |
-        cat > DETAILS.md << 'EOF'
-        ## Available Architectures
-        - **arm64**: 64-bit ARM devices
-        - **armhf**: 32-bit ARM devices
-        
-        ## Variants
-        - **minimal**: Minimal installation with essential tools
-        - **nano**: Even more minimal footprint
-        EOF
-        
         echo -e "\n## Checksums" >> DETAILS.md
         echo '```' >> DETAILS.md
         for file in kali-nethunter-*.tar.xz; do
@@ -75,14 +63,14 @@ jobs:
           # Check if release exists, create if it doesn't
           if ! gh release view "kali-latest" > /dev/null 2>&1; then
             gh release create "kali-latest" \
-              --title "Kali Linux Latest Release: $(date +'%Y-%m-%d')" \
+              --title "Kali Linux Latest Release: $(date +'%m-%d-%Y')" \
               --notes-file DETAILS.md \
               --draft=false \
               --prerelease=false
           else
             # Update existing release with new notes
             gh release edit "kali-latest" \
-              --title "Kali Linux Latest Release: $(date +'%Y-%m-%d')" \
+              --title "Kali Linux Latest Release: $(date +'%m-%d-%Y')" \
               --notes-file DETAILS.md
           fi
           
