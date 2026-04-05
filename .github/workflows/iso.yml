@@ -8,10 +8,10 @@ on:
     - cron: "0 3 * * SUN"
 
 env:
-  ISO_URL_AMD64: https://kali.download/base-images/current/kali-linux-2025.4-installer-netinst-amd64.iso
-  ISO_NAME_AMD64: kali-linux-2025.4-installer-netinst-amd64.iso
-  ISO_URL_ARM64: https://kali.download/base-images/current/kali-linux-2025.4-installer-netinst-arm64.iso
-  ISO_NAME_ARM64: kali-linux-2025.4-installer-netinst-arm64.iso
+  ISO_URL_AMD64: https://kali.download/base-images/current/kali-linux-2026.1-installer-netinst-amd64.iso
+  ISO_NAME_AMD64: kali-linux-2026.1-installer-netinst-amd64.iso
+  ISO_URL_ARM64: https://kali.download/base-images/current/kali-linux-2026.1-installer-netinst-arm64.iso
+  ISO_NAME_ARM64: kali-linux-2026.1-installer-netinst-arm64.iso
 
 jobs:
   download-and-release:
@@ -93,7 +93,7 @@ jobs:
         
     - name: Upload AMD64 ISO to release
       if: github.event_name == 'release'
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: ${{ env.ISO_NAME_AMD64 }}
       env:
@@ -101,7 +101,7 @@ jobs:
         
     - name: Upload ARM64 ISO to release
       if: github.event_name == 'release'
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: ${{ env.ISO_NAME_ARM64 }}
       env:
