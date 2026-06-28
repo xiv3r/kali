@@ -19,7 +19,7 @@ jobs:
     
     steps:
     - name: Checkout repository with LFS
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         lfs: true
         fetch-depth: 0
@@ -93,7 +93,7 @@ jobs:
         
     - name: Upload AMD64 ISO to release
       if: github.event_name == 'release'
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         files: ${{ env.ISO_NAME_AMD64 }}
       env:
@@ -101,7 +101,7 @@ jobs:
         
     - name: Upload ARM64 ISO to release
       if: github.event_name == 'release'
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         files: ${{ env.ISO_NAME_ARM64 }}
       env:
