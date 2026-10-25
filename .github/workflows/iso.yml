@@ -30,7 +30,7 @@ jobs:
          wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-armhf.tar.xz || true
          wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-nano-armhf.tar.xz || true
         
-         wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso || true
+         wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-amd64.iso || true
          wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso || true
          
         
