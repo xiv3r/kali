@@ -1,10 +1,10 @@
 name: Updating Kali Linux
 
 on:
-  schedule:
-    - cron: '0 3 * * SUN'
   workflow_dispatch:
-
+  release:
+    types: [published]
+    
 jobs:
   download-and-release:
     runs-on: ubuntu-latest
