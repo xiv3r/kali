@@ -17,8 +17,6 @@ jobs:
 
     - name: Download Kali Linux
       run: |
-         mkdir - p downloads
-         cd downloads
          wget https://image-nethunter.kali.org/nethunter-fs/kali-daily/kali-nethunter-daily-dev-rootfs-minimal-arm64.tar.xz || true
          wget https://image-nethunter.kali.org/nethunter-fs/kali-daily/kali-nethunter-daily-dev-rootfs-nano-arm64.tar.xz || true
          wget https://image-nethunter.kali.org/nethunter-fs/kali-daily/kali-nethunter-daily-dev-rootfs-minimal-armhf.tar.xz || true
@@ -29,7 +27,8 @@ jobs:
          wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-nano-arm64.tar.xz || true
          wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-armhf.tar.xz || true
          wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-nano-armhf.tar.xz || true
-        
+
+         # Download current net install iso
          wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-amd64.iso || true
          wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso || true
          
@@ -38,7 +37,7 @@ jobs:
       run: |
         git config user.name  "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add -f downloads/*.iso
+        git add -f *.iso
         git commit -m "chore: update kali linux [skip ci]" || echo "No changes to commit"
         git pull --rebase --autostash origin main
         git push
@@ -58,6 +57,6 @@ jobs:
       with:
         tag_name: ${{ steps.get_tag.outputs.tag_name }}
         files: |
-            downloads/*.xz
+             *.xz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
