@@ -19,14 +19,19 @@ jobs:
       run: |
          mkdir - p downloads
          cd downloads
-
-         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-amd64.tar.xz
-         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz
-         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-armhf.tar.xz
-         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-i386.tar.xz
-         
-         wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso
-         wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso
+         wget https://image-nethunter.kali.org/nethunter-fs/kali-daily/kali-nethunter-daily-dev-rootfs-minimal-arm64.tar.xz || true
+         wget https://image-nethunter.kali.org/nethunter-fs/kali-daily/kali-nethunter-daily-dev-rootfs-nano-arm64.tar.xz || true
+         wget https://image-nethunter.kali.org/nethunter-fs/kali-daily/kali-nethunter-daily-dev-rootfs-minimal-armhf.tar.xz || true
+         wget https://image-nethunter.kali.org/nethunter-fs/kali-daily/kali-nethunter-daily-dev-rootfs-nano-armhf.tar.xz || true
+        
+         # Download current stable builds
+         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz || true
+         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-nano-arm64.tar.xz || true
+         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-armhf.tar.xz || true
+         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-nano-armhf.tar.xz || true
+        
+         wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso || true
+         wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso || true
          
         
     - name: Commit Kali
@@ -44,7 +49,7 @@ jobs:
         if [ "${{ github.event_name }}" == "release" ]; then
           TAG_NAME="${{ github.event.release.tag_name }}"
         else
-          TAG_NAME="kali"
+          TAG_NAME="kali-latest"
         fi
         echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
 
