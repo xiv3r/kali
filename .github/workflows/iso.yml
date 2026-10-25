@@ -23,8 +23,9 @@ jobs:
          wget
          wget
          wget
-         wget
-         wget
+         
+         wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso
+         wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso
          
         
     - name: Commit Kali
