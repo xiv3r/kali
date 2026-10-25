@@ -20,9 +20,10 @@ jobs:
          mkdir - p downloads
          cd downloads
 
-         wget
-         wget
-         wget
+         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-amd64.tar.xz
+         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz
+         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-armhf.tar.xz
+         wget https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-i386.tar.xz
          
          wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso
          wget https://kali.download/base-images/current/kali-linux-2026.3-installer-netinst-arm64.iso
